@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace VirtualPetCareApi.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {

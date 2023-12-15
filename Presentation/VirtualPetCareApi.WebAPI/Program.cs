@@ -67,7 +67,6 @@ builder.Services.AddHttpLogging(logging =>
 
 });
 
-
 //builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 //builder.Services.AddValidatorsFromAssemblyContaining<CreateActivityValidator>();
 //builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>())
