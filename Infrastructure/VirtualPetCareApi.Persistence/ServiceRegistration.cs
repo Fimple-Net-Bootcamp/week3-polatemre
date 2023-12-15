@@ -5,6 +5,8 @@ using VirtualPetCareApi.Persistence.Contexts;
 using VirtualPetCareApi.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using VirtualPetCareApi.Application.Repositories;
+using VirtualPetCareApi.Persistence.Repositories;
 
 namespace VirtualPetCareApi.Persistence
 {
@@ -21,6 +23,18 @@ namespace VirtualPetCareApi.Persistence
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredLength = 3;
             }).AddEntityFrameworkStores<VirtualPetCareApiDbContext>();
+
+            services.AddScoped<IPetReadRepository, PetReadRepository>();
+            services.AddScoped<IPetWriteRepository, PetWriteRepository>();
+
+            services.AddScoped<IActivityReadRepository, ActivityReadRepository>();
+            services.AddScoped<IActivityWriteRepository, ActivityWriteRepository>();
+
+            services.AddScoped<IHealthReadRepository, HealthReadRepository>();
+            services.AddScoped<IHealthWriteRepository, HealthWriteRepository>();
+
+            services.AddScoped<IFoodReadRepository, FoodReadRepository>();
+            services.AddScoped<IFoodWriteRepository, FoodWriteRepository>();
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();

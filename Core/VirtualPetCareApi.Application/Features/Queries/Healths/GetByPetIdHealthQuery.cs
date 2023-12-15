@@ -23,7 +23,7 @@ namespace VirtualHealthCareApi.Application.Features.Queries.Healths
             }
             public async Task<GetByPetIdHealthQueryResponse> Handle(GetByPetIdHealthQuery request, CancellationToken cancellationToken)
             {
-                var pet = await _petReadRepository.Table.Where(x => x.Id == request.Id).FirstOrDefaultAsync();
+                var pet = await _petReadRepository.Table.Where(x => x.Id == request.PetId).FirstOrDefaultAsync();
                 return new()
                 {
                     Name = pet.Name,

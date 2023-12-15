@@ -10,7 +10,7 @@ namespace VirtualPetCareApi.Application.Features.Commands.Activities
 {
     public class RemoveActivityCommand : IRequest<RemoveActivityCommandResponse>
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public class RemoveActivityCommandHandler : IRequestHandler<RemoveActivityCommand, RemoveActivityCommandResponse>
         {
