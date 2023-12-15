@@ -9,6 +9,10 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection.Emit;
+using VirtualPetCareApi.Persistence.Configurations;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace VirtualPetCareApi.Persistence.Contexts
 {
@@ -24,20 +28,50 @@ namespace VirtualPetCareApi.Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //builder.Entity<Donation>()
-            //    .HasKey(b => b.Id);
+            builder.Entity<Food>().HasData(
+                new Food { Id = 1, Value = 25, Name = "Kedi Maması", CreatedDate = DateTime.UtcNow },
+                new Food { Id = 2, Value = 50, Name = "Et", CreatedDate = DateTime.UtcNow }
+                );
 
-            //builder.Entity<Donation>()
-            //    .HasIndex(o => o.OrderCode)
-            //    .IsUnique();
+            builder.Entity<Health>().HasData(
+                new Health { Id = 1, Value = 100, Description = "Sağlıklı", CreatedDate = DateTime.UtcNow },
+                new Health { Id = 2, Value = 50, Description = "Orta", CreatedDate = DateTime.UtcNow }
+                );
 
-            //builder.Entity<Basket>()
-            //    .HasOne(b => b.Donation)
-            //    .WithOne(o => o.Basket)
-            //    .HasForeignKey<Donation>(b => b.Id);
+            builder.Entity<Pet>().HasData(
+                new Pet { Id = 1, Name = "Kedi", Description = "Sevimli", HealthId = 1, UserId = "b74ddd14-6340-4840-95c2-db12554843e5", Status = true, CreatedDate = DateTime.UtcNow },
+                new Pet { Id = 2, Name = "Köpek", Description = "", HealthId = 1, UserId = "b74ddd14-6340-4840-95c2-db12554843e5", Status = true, CreatedDate = DateTime.UtcNow }
+            );
 
+            builder.Entity<Activity>().HasData(
+                new Activity { Id = 1, Name = "Yürüyebilir", PetId = 1, CreatedDate = DateTime.UtcNow },
+                new Activity { Id = 2, Name = "Oyun Oynayabilir", PetId = 1, CreatedDate = DateTime.UtcNow },
+                new Activity { Id = 3, Name = "Eğitilebilir", PetId = 2, CreatedDate = DateTime.UtcNow }
+                );
+
+            this.SeedUsers(builder);
             base.OnModelCreating(builder);
+
         }
+
+        private void SeedUsers(ModelBuilder builder)
+        {
+            AppUser user = new AppUser()
+            {
+                Id = "b74ddd14-6340-4840-95c2-db12554843e5",
+                NameSurname = "Admin",
+                UserName = "Admin",
+                Email = "admin@gmail.com",
+                LockoutEnabled = false,
+                PhoneNumber = "1234567890"
+            };
+
+            PasswordHasher<AppUser> passwordHasher = new PasswordHasher<AppUser>();
+            passwordHasher.HashPassword(user, "Admin*123");
+
+            builder.Entity<AppUser>().HasData(user);
+        }
+
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             //ChangeTracker: Entityler üzerinden yapılan değişikliklerin ya da yeni eklenen verinin yakalanmasını sağlayan propertydir.Update operasyonlarında track edilen verileri yakalayıp elde etmemizi sağlar.

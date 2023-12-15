@@ -15,6 +15,7 @@ using System.Security.Claims;
 using System.Text;
 using VirtualPetCareApi.WebAPI.Extensions;
 using Serilog.Context;
+using VirtualPetCareApi.Persistence.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -95,9 +96,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-var app = builder.Build();
 
+
+var app = builder.Build();
 // Configure the HTTP request pipeline.
+
+//SampleData.Initialize(app.Services);
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
