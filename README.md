@@ -14,23 +14,23 @@ Veritabanında en az beş tablo bulunacak:
 
 #### API Fonksiyonları
 1. **Kullanıcı İşlemleri**:
-   - `POST /kullanicilar`: Yeni kullanıcı oluşturur.
-   - `GET /kullanicilar/{kullaniciId}`: Belirli bir kullanıcının bilgilerini getirir.
+   - `POST /kullanicilar`: Yeni kullanıcı oluşturur. -
+   - `GET /kullanicilar/{kullaniciId}`: Belirli bir kullanıcının bilgilerini getirir. -
 
 2. **Evcil Hayvan İşlemleri**:
-   - `POST /evcilHayvanlar`: Yeni evcil hayvan oluşturur.
-   - `GET /evcilHayvanlar`: Tüm evcil hayvanları listeler.
-   - `GET /evcilHayvanlar/{evcilHayvanId}`: Belirli bir evcil hayvanın bilgilerini getirir.
-   - `PUT /evcilHayvanlar/{evcilHayvanId}`: Evcil hayvanın bilgilerini günceller.
+   - `POST /evcilHayvanlar`: Yeni evcil hayvan oluşturur. -
+   - `GET /evcilHayvanlar`: Tüm evcil hayvanları listeler. -
+   - `GET /evcilHayvanlar/{evcilHayvanId}`: Belirli bir evcil hayvanın bilgilerini getirir. -
+   - `PUT /evcilHayvanlar/{evcilHayvanId}`: Evcil hayvanın bilgilerini günceller. -
 
 3. **Sağlık Durumu İşlemleri**:
-   - `GET /saglikDurumlari/{evcilHayvanId}`: Belirli bir evcil hayvanın sağlık durumunu getirir.
+   - `GET /saglikDurumlari/{evcilHayvanId}`: Belirli bir evcil hayvanın sağlık durumunu getirir. -
    - `PATCH /saglikDurumlari/{evcilHayvanId}`: Evcil hayvanın sağlık durumunu günceller.
 
 4. **Aktivite İşlemleri**:
-   - `POST /aktiviteler`: Evcil hayvan için yeni bir aktivite ekler.
-   - `GET /aktiviteler/{evcilHayvanId}`: Evcil hayvanın yapabileceği aktiviteleri listeler.
+   - `POST /aktiviteler`: Evcil hayvan için yeni bir aktivite ekler. -
+   - `GET /aktiviteler/{evcilHayvanId}`: Evcil hayvanın yapabileceği aktiviteleri listeler. -
 
 5. **Besin İşlemleri**:
-   - `GET /besinler`: Tüm besinleri listeler.
-   - `POST /besinler/{evcilHayvanId}`: Evcil hayvana besin verir.
+   - `GET /besinler`: Tüm besinleri listeler. -
+   - `POST /besinler/{evcilHayvanId}`: Evcil hayvana besin verir. -

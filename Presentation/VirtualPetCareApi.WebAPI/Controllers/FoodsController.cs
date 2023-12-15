@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using VirtualFoodCareApi.Application.Features.Commands.Foods;
+using VirtualPetCareApi.Application.Features.Queries.Foods;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +11,30 @@ namespace VirtualPetCareApi.WebAPI.Controllers
     [ApiController]
     public class FoodsController : ControllerBase
     {
-        // GET: api/<FoodsController>
+        readonly IMediator _mediator;
+
+        public FoodsController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get([FromQuery] GetAllFoodQuery getAllFoodQueryRequest)
         {
-            return new string[] { "value1", "value2" };
+            GetAllFoodQueryResponse response = await _mediator.Send(getAllFoodQueryRequest);
+            return Ok(response);
         }
 
-        // GET api/<FoodsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpPost("{PetId}")]
+        public async Task<IActionResult> GiveFood([FromQuery] int petId, [FromBody] int foodId)
         {
-            return "value";
-        }
-
-        // POST api/<FoodsController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<FoodsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<FoodsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var updateFoodCommand = new UpdateFoodCommand()
+            {
+                FoodId = foodId,
+                PetId = petId
+            };
+            UpdateFoodCommandResponse response = await _mediator.Send(updateFoodCommand);
+            return Ok(response);
         }
     }
 }

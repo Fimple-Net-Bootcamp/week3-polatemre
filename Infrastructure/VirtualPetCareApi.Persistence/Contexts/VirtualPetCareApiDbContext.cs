@@ -17,15 +17,10 @@ namespace VirtualPetCareApi.Persistence.Contexts
         public VirtualPetCareApiDbContext(DbContextOptions options) : base(options)
         { }
 
-        //public DbSet<Activity> Activities { get; set; }
-        //public DbSet<ActivityType> ActivityTypes { get; set; }
-        //public DbSet<Donation> Donations { get; set; }
-        //public DbSet<DonationType> DonationTypes { get; set; }
-        //public DbSet<Domain.Entities.File> Files { get; set; }
-        //public DbSet<ActivityImageFile> ActivityImageFiles { get; set; }
-        //public DbSet<InvoiceFile> InvoiceFiles { get; set; }
-        //public DbSet<Basket> Baskets { get; set; }
-        //public DbSet<BasketItem> BasketItems { get; set; }
+        public DbSet<Activity> Activities { get; set; }
+        public DbSet<Pet> Pets { get; set; }
+        public DbSet<Health> Healths { get; set; }
+        public DbSet<Food> Foods { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

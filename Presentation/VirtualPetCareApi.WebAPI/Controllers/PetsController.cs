@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using VirtualPetCareApi.Application.Features.Commands.Activities;
+using VirtualPetCareApi.Application.Features.Commands.Pets;
+using VirtualPetCareApi.Application.Features.Queries.Activities;
+using VirtualPetCareApi.Application.Features.Queries.Pets;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +13,39 @@ namespace VirtualPetCareApi.WebAPI.Controllers
     [ApiController]
     public class PetsController : ControllerBase
     {
-        // GET: api/<PetsController>
+        readonly IMediator _mediator;
+
+        public PetsController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> GetAll([FromQuery] GetAllPetQuery getAllPetQueryRequest)
         {
-            return new string[] { "value1", "value2" };
+            GetAllPetQueryResponse response = await _mediator.Send(getAllPetQueryRequest);
+            return Ok(response);
         }
 
-        // GET api/<PetsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetById([FromRoute] GetByIdPetQuery getByIdPetQuery)
         {
-            return "value";
+            GetByIdPetQueryResponse response = await _mediator.Send(getByIdPetQuery);
+            return Ok(response);
         }
 
-        // POST api/<PetsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Create([FromBody] CreatePetCommand createPetCommand)
         {
+            CreatePetCommandResponse response = await _mediator.Send(createPetCommand);
+            return Ok(response);
         }
 
-        // PUT api/<PetsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{Id}")]
+        public async Task<IActionResult> Update([FromRoute] UpdatePetCommand updatePetCommand)
         {
-        }
-
-        // DELETE api/<PetsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            UpdatePetCommandResponse response = await _mediator.Send(updatePetCommand);
+            return Ok(response);
         }
     }
 }

@@ -11,9 +11,10 @@ namespace VirtualPetCareApi.Domain.Entities
     public class Pet : BaseEntity
     {
         public string Name { get; set; }
+        public string Description { get; set; }
         public bool Status { get; set; }
 
-        public string HealthId { get; set; }
+        public int HealthId { get; set; }
         public Health Health { get; set; }
 
         public string UserId { get; set; }

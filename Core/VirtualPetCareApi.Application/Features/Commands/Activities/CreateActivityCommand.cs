@@ -1,46 +1,37 @@
-﻿using VirtualPetCareApi.Application.Abstractions.Hubs;
-using VirtualPetCareApi.Application.Repositories;
+﻿using VirtualPetCareApi.Application.Repositories;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Activity = VirtualPetCareApi.Domain.Entities.Activity;
 
 namespace VirtualPetCareApi.Application.Features.Commands.Activities
 {
     public class CreateActivityCommand : IRequest<CreateActivityCommandResponse>
     {
-        public Guid ActivityTypeId { get; set; }
+        public int PetId { get; set; }
         public string Name { get; set; }
-        public string? Description { get; set; }
-        //public bool? IsConstAmount { get; set; }
-        //public float? ConstAmount { get; set; }
-        //public ActivityType ActivityType { get; set; }
-        //public ICollection<Donation> Donations { get; set; }
 
         public class CreateActivityCommandHandler : IRequestHandler<CreateActivityCommand, CreateActivityCommandResponse>
         {
             readonly IActivityWriteRepository _activityWriteRepository;
-            readonly IActivityHubService _activityHubService;
-            public CreateActivityCommandHandler(IActivityWriteRepository activityWriteRepository, IActivityHubService activityHubService)
+            public CreateActivityCommandHandler(IActivityWriteRepository activityWriteRepository)
             {
                 _activityWriteRepository = activityWriteRepository;
-                _activityHubService = activityHubService;
             }
             public async Task<CreateActivityCommandResponse> Handle(CreateActivityCommand request, CancellationToken cancellationToken)
             {
-                await _activityWriteRepository.AddAsync(new()
+                var activity = new Activity()
                 {
-                    //ConstAmount = model.ConstAmount,
-                    Description = request.Description,
-                    //IsConstAmount = model.IsConstAmount,
+                    PetId = request.PetId,
                     Name = request.Name,
-                    ActivityTypeId = request.ActivityTypeId
-                });
+                };
+
+                await _activityWriteRepository.AddAsync(activity);
                 await _activityWriteRepository.SaveAsync();
-                await _activityHubService.ActivityAddedMessageAsync($"{request.Name} isminde aktivite eklenmiştir.");
-                return new CreateActivityCommandResponse() { };
+                return new CreateActivityCommandResponse() 
+                { 
+                    Id = activity.Id,
+                    Name = activity.Name,
+                    PetId = activity.PetId
+                };
             }
         }
 
@@ -48,6 +39,8 @@ namespace VirtualPetCareApi.Application.Features.Commands.Activities
 
     public class CreateActivityCommandResponse
     {
-
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int PetId { get; set; }
     }
 }

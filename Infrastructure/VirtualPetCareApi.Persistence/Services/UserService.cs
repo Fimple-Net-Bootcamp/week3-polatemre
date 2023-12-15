@@ -75,6 +75,20 @@ namespace VirtualPetCareApi.Persistence.Services
             }
         }
 
+        public async Task<SingleUser> GetById(string id)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == id);
+
+            return new()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                NameSurname = user.NameSurname,
+                TwoFactorEnabled = user.TwoFactorEnabled,
+                UserName = user.UserName
+            };
+        }
+
         public async Task<List<ListUser>> GetAllUsersAsync(int page, int size)
         {
             var users = await _userManager.Users
