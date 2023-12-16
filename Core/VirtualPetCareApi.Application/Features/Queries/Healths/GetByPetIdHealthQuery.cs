@@ -16,18 +16,22 @@ namespace VirtualHealthCareApi.Application.Features.Queries.Healths
         public class GetByHealthIdActivityQueryHandler : IRequestHandler<GetByPetIdHealthQuery, GetByPetIdHealthQueryResponse>
         {
             readonly IPetReadRepository _petReadRepository;
+            readonly IHealthReadRepository _healthReadRepository;
 
-            public GetByHealthIdActivityQueryHandler(IActivityReadRepository activityReadRepository, IHealthReadRepository healthReadRepository, IPetReadRepository petReadRepository)
+            public GetByHealthIdActivityQueryHandler(IHealthReadRepository healthReadRepository, IPetReadRepository petReadRepository)
             {
+                _healthReadRepository = healthReadRepository;
                 _petReadRepository = petReadRepository;
             }
+
             public async Task<GetByPetIdHealthQueryResponse> Handle(GetByPetIdHealthQuery request, CancellationToken cancellationToken)
             {
                 var pet = await _petReadRepository.Table.Where(x => x.Id == request.PetId).FirstOrDefaultAsync();
+                var health = await _healthReadRepository.Table.FirstOrDefaultAsync(x => x.Id == pet.HealthId);
                 return new()
                 {
                     Name = pet.Name,
-                    Health = pet.Health,
+                    HealthValue = health != null ? health.Value : 0
                 };
             }
         }
@@ -36,7 +40,7 @@ namespace VirtualHealthCareApi.Application.Features.Queries.Healths
     public class GetByPetIdHealthQueryResponse
     {
         public string Name { get; set; }
-        public Health Health { get; set; }
+        public int HealthValue { get; set; }
 
     }
 }

@@ -72,8 +72,10 @@ builder.Services.AddHttpLogging(logging =>
 //builder.Services.AddValidatorsFromAssemblyContaining<CreateActivityValidator>();
 //builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>())
 //    .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
-builder.Services.AddControllers();
 
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

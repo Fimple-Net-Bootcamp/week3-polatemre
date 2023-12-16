@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace VirtualPetCareApi.Application.Features.Queries.Activities
+namespace VirtualPetCareApi.Application.Features.Queries.Pets
 {
     public class GetByIdPetQuery : IRequest<GetByIdPetQueryResponse>
     {
@@ -26,11 +26,12 @@ namespace VirtualPetCareApi.Application.Features.Queries.Activities
             public async Task<GetByIdPetQueryResponse> Handle(GetByIdPetQuery request, CancellationToken cancellationToken)
             {
                 Pet? pet = await _petReadRepository.Table.Include(x => x.Activities).Where(x => x.Id == request.Id).FirstOrDefaultAsync();
+                var activities = pet.Activities.Select(x => x.Name).ToList();
                 return new()
                 {
                     Name = pet.Name,
-                    Activities = pet.Activities.ToList(),
-                    Health = pet.Health,
+                    Activities = activities,
+                    HealthId = pet.HealthId
                 };
             }
         }
@@ -39,8 +40,8 @@ namespace VirtualPetCareApi.Application.Features.Queries.Activities
     public class GetByIdPetQueryResponse
     {
         public string Name { get; set; }
-        public List<Activity> Activities { get; set; }
-        public Health Health { get; set; }
+        public List<string> Activities { get; set; }
+        public int HealthId { get; set; }
 
     }
 }

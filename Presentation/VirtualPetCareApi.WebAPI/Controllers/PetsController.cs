@@ -41,9 +41,10 @@ namespace VirtualPetCareApi.WebAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPut("{Id}")]
-        public async Task<IActionResult> Update([FromRoute] UpdatePetCommand updatePetCommand)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdatePetCommand updatePetCommand)
         {
+            updatePetCommand.Id = id;
             UpdatePetCommandResponse response = await _mediator.Send(updatePetCommand);
             return Ok(response);
         }

@@ -25,8 +25,8 @@ namespace VirtualPetCareApi.WebAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPost("{PetId}")]
-        public async Task<IActionResult> GiveFood([FromQuery] int petId, [FromBody] int foodId)
+        [HttpPost("{petId}")]
+        public async Task<IActionResult> GiveFood([FromRoute] int petId, [FromBody] int foodId)
         {
             var updateFoodCommand = new UpdateFoodCommand()
             {

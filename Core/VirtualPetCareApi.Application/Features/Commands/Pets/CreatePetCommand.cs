@@ -2,7 +2,7 @@
 using MediatR;
 using Pet = VirtualPetCareApi.Domain.Entities.Pet;
 
-namespace VirtualPetCareApi.Application.Features.Commands.Activities
+namespace VirtualPetCareApi.Application.Features.Commands.Pets
 {
     public class CreatePetCommand : IRequest<CreatePetCommandResponse>
     {

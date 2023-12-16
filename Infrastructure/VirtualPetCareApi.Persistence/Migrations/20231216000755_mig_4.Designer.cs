@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using VirtualPetCareApi.Persistence.Contexts;
@@ -11,9 +12,11 @@ using VirtualPetCareApi.Persistence.Contexts;
 namespace VirtualPetCareApi.Persistence.Migrations
 {
     [DbContext(typeof(VirtualPetCareApiDbContext))]
-    partial class VirtualPetCareApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231216000755_mig_4")]
+    partial class mig_4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -374,17 +377,14 @@ namespace VirtualPetCareApi.Persistence.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "10a56692-345d-414c-ae5a-93e3b869da29",
+                            ConcurrencyStamp = "cd8e27c7-cfcd-4612-8df4-bdd0e523e20c",
                             Email = "admin@gmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             LockoutEnabled = false,
                             NameSurname = "Admin",
-                            NormalizedEmail = "XXXX@EXAMPLE.COM",
-                            NormalizedUserName = "OWNER",
-                            PasswordHash = "AQAAAAIAAYagAAAAENgplWIXOITQ9zpg+vDyg8xtKU7PUXohG3FXAbN9H/9zSAaujxFo0SrzSbIYKYsJ+A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENNhTCgSGRqK7JdazQUcPEpq/wVjPzyhwfBkgOnZGIq7gEvp4wW2BpME7lkaGhKq9w==",
                             PhoneNumber = "1234567890",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "62fc0697-701f-45a0-9f4d-778cb15b5275",
+                            PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });

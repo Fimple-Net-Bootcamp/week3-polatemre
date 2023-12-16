@@ -29,24 +29,24 @@ namespace VirtualPetCareApi.Persistence.Contexts
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Food>().HasData(
-                new Food { Id = 1, Value = 25, Name = "Kedi Maması", CreatedDate = DateTime.UtcNow },
-                new Food { Id = 2, Value = 50, Name = "Et", CreatedDate = DateTime.UtcNow }
+                new Food { Id = 1, Value = 25, Name = "Kedi Maması"},
+                new Food { Id = 2, Value = 50, Name = "Et" }
                 );
 
             builder.Entity<Health>().HasData(
-                new Health { Id = 1, Value = 100, Description = "Sağlıklı", CreatedDate = DateTime.UtcNow },
-                new Health { Id = 2, Value = 50, Description = "Orta", CreatedDate = DateTime.UtcNow }
+                new Health { Id = 1, Value = 100, Description = "Sağlıklı"},
+                new Health { Id = 2, Value = 50, Description = "Orta"}
                 );
 
             builder.Entity<Pet>().HasData(
-                new Pet { Id = 1, Name = "Kedi", Description = "Sevimli", HealthId = 1, UserId = "b74ddd14-6340-4840-95c2-db12554843e5", Status = true, CreatedDate = DateTime.UtcNow },
-                new Pet { Id = 2, Name = "Köpek", Description = "", HealthId = 1, UserId = "b74ddd14-6340-4840-95c2-db12554843e5", Status = true, CreatedDate = DateTime.UtcNow }
+                new Pet { Id = 1, Name = "Kedi", Description = "Sevimli", HealthId = 1, UserId = "b74ddd14-6340-4840-95c2-db12554843e5", Status = true },
+                new Pet { Id = 2, Name = "Köpek", Description = "", HealthId = 1, UserId = "b74ddd14-6340-4840-95c2-db12554843e5", Status = true }
             );
 
             builder.Entity<Activity>().HasData(
-                new Activity { Id = 1, Name = "Yürüyebilir", PetId = 1, CreatedDate = DateTime.UtcNow },
-                new Activity { Id = 2, Name = "Oyun Oynayabilir", PetId = 1, CreatedDate = DateTime.UtcNow },
-                new Activity { Id = 3, Name = "Eğitilebilir", PetId = 2, CreatedDate = DateTime.UtcNow }
+                new Activity { Id = 1, Name = "Yürüyebilir", PetId = 1 },
+                new Activity { Id = 2, Name = "Oyun Oynayabilir", PetId = 1 },
+                new Activity { Id = 3, Name = "Eğitilebilir", PetId = 2, }
                 );
 
             this.SeedUsers(builder);
@@ -63,11 +63,16 @@ namespace VirtualPetCareApi.Persistence.Contexts
                 UserName = "Admin",
                 Email = "admin@gmail.com",
                 LockoutEnabled = false,
-                PhoneNumber = "1234567890"
+                PhoneNumber = "1234567890",
+                NormalizedEmail = "XXXX@EXAMPLE.COM",
+                NormalizedUserName = "OWNER",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString("D")
             };
 
             PasswordHasher<AppUser> passwordHasher = new PasswordHasher<AppUser>();
-            passwordHasher.HashPassword(user, "Admin*123");
+            user.PasswordHash = passwordHasher.HashPassword(user, "Admin*123");
 
             builder.Entity<AppUser>().HasData(user);
         }

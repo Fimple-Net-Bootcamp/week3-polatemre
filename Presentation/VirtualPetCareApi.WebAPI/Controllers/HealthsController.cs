@@ -26,7 +26,7 @@ namespace VirtualPetCareApi.WebAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPatch("{PetId}")]
+        [HttpPatch("{petId}")]
         public async Task<IActionResult> Get([FromRoute] int petId, [FromBody] PatchHealthCommand patchHealthCommand)
         {
             PatchHealthCommandResponse response = await _mediator.Send(patchHealthCommand);

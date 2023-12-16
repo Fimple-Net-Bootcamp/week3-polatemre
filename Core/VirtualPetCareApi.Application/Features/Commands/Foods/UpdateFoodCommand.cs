@@ -32,15 +32,20 @@ namespace VirtualFoodCareApi.Application.Features.Commands.Foods
             {
                 var food = await _foodReadRepository.GetByIdAsync(request.FoodId);
                 var pet = await _petReadRepository.GetByIdAsync(request.PetId);
-                pet.Health.Value += food.Value;
-                _healthWriteRepository.Update(pet.Health);
-                await _healthWriteRepository.SaveAsync();
+                var health = await _healthReadRepository.GetByIdAsync(pet.HealthId);
+                if(health != null)
+                {
+                    health.Value += food.Value;
+                    _healthWriteRepository.Update(health);
+                    await _healthWriteRepository.SaveAsync();
+                }
+
 
                 return new()
                 {
                     Id = pet.Id,
                     Name = pet.Name,
-                    Health = pet.Health
+                    HealthValue = health.Value
                 };
             }
         }
@@ -51,6 +56,6 @@ namespace VirtualFoodCareApi.Application.Features.Commands.Foods
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Health Health { get; set; }
+        public int HealthValue { get; set; }
     }
 }

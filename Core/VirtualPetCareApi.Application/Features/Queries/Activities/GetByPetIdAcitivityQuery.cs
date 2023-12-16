@@ -25,11 +25,12 @@ namespace VirtualPetCareApi.Application.Features.Queries.Activities
             }
             public async Task<GetByPetIdAcitivityQueryResponse> Handle(GetByPetIdAcitivityQuery request, CancellationToken cancellationToken)
             {
-                Pet? pet = await _petReadRepository.Table.Include(x => x.Activities).Where(x => x.Id == request.PetId).FirstOrDefaultAsync();
+                Pet? pet = await _petReadRepository.Table.Where(x => x.Id == request.PetId).Include(x => x.Activities).FirstOrDefaultAsync();
+                var activities = pet.Activities.Select(x => x.Name).ToList();
                 return new()
                 {
                     Name = pet.Name,
-                    Activities = pet.Activities.ToList()
+                    Activities = activities
                 };
             }
         }
@@ -38,6 +39,6 @@ namespace VirtualPetCareApi.Application.Features.Queries.Activities
     public class GetByPetIdAcitivityQueryResponse
     {
         public string Name { get; set; }
-        public List<Activity> Activities { get; set; }
+        public List<string> Activities { get; set; }
     }
 }
