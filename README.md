@@ -4,6 +4,12 @@
 #### Proje Özeti
 Bu proje, kullanıcıların sanal evcil hayvanlarını yönetebilmeleri için bir RESTful API geliştirmeyi hedefler. API, kullanıcıların sanal evcil hayvanlarını beslemelerine, oynatmalarına, eğitmelerine ve onların sağlık durumlarını izlemelerine olanak tanır. Proje, .NET 7 ve Entity Framework Core 7 kullanarak gerçekleştirilecektir.
 
+Projede Clean Architecture, CQRS, MediatR pattern, JWT kullanılmıştır.
+
+### Swagger
+
+![screencapture-localhost-7104-swagger-index-html-2023-12-16-02_53_45](https://github.com/Fimple-Net-Bootcamp/week3-polatemre/assets/41800395/e8455564-fe20-4a23-8b44-5eaa182e2eb5)
+
 #### Veritabanı Tasarımı
 Veritabanında en az beş tablo bulunacak:
 1. **Kullanıcılar**: Kullanıcı bilgilerini içerir.
